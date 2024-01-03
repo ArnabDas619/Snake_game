@@ -1,6 +1,7 @@
 from turtle import Turtle, Screen
 
 from food import Food
+from scoreboard import Scoreboard
 from snake import Snake
 import time
 
@@ -11,6 +12,7 @@ screen.title("My Snake Game")
 screen.tracer(0)
 snake = Snake()
 food = Food()
+scoreboard = Scoreboard()
 screen.listen()
 screen.onkey(snake.up, 'Up')
 screen.onkey(snake.down, 'Down')
@@ -26,5 +28,11 @@ while game_is_on:
     # Collision with food
     if snake.head.distance(food) < 15:
         food.refresh()
+        scoreboard.update_score()
+    # collision with wall
+    if snake.head.xcor() > 280 or snake.head.xcor() < -280 or snake.head.ycor() > 280 or snake.head.ycor() < -280:
+        game_is_on = False
+        scoreboard.game_over()
+
 
 screen.exitonclick()
